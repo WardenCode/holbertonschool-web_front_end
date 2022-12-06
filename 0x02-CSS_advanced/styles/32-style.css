@@ -295,7 +295,7 @@ ul.row {
 	transform: scale(0.95);
 }
 
-.card-work .card-image {
+.card-work .card-image img {
 	height: 30rem;
 	width: 100%;
 	object-fit: cover;
