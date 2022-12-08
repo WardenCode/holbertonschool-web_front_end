@@ -1,19 +1,19 @@
 /* Assign: Font size 12px to all tags of class ".info". Text color #00FF00 to all tags of class .success and extend style of the class ".info". Text color #FF0000 to all tags of class .warning and extend style of the class .info */
 
-%default-font-size {
-	font-size: 12px;
-}
+$red: #FF0000;
+$green: #00FF00;
+$font-size-regular: 12px;
 
-.info {
-	@extend %default-font-size;
+.info, %default-size-font {
+	font-size: $font-size-regular;
 }
 
 .success {
-	@extend %default-font-size;
-	color: #00FF00;
+    @extend .info;
+    color: #00FF00;
 }
 
 .warning {
-	@extend %default-font-size;
-	color: #FF0000;
+	@extend %default-size-font;
+	color: $red;
 }
