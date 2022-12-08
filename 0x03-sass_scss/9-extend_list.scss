@@ -1,7 +1,5 @@
 /* extended */
 
-$red: #FF0000;
-$green: #00FF00;
 $font-size-regular: 12px;
 
 .info, %default-size-font {
@@ -15,5 +13,5 @@ $font-size-regular: 12px;
 
 .warning {
 	@extend %default-size-font;
-	color: $red;
+	color: #FF0000;
 }
