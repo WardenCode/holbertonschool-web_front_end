@@ -372,14 +372,11 @@ ul.row {
   list-style: none;
 }
 
-.row::after {
-  content: '';
-  display: table;
-  clear: both;
+.row {
+  display: flex;
 }
 
 [class*='col-'] {
-  float: left;
   padding: 0.5rem;
 }
 
@@ -559,6 +556,14 @@ ul.row {
 .section-hero .section-inner {
   padding: 10rem 40rem 2rem 0;
 }
+
+/* Section Latest news
+		============================= */
+
+.section-latest-news .row {
+	flex-direction: row-reverse;
+}
+
 
 /*** 4. CARD ***/
 
