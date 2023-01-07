@@ -1,0 +1,43 @@
+:root {
+	--primary-color: #E0003C;
+	--secondary-color: #BC1340;
+}
+
+
+.btn-primary {
+	background-color: var(--primary-color);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+	background-color: var(--secondary-color);
+}
+
+.btn-outline-primary {
+	border-color: var(--primary-color);
+	color: var(--primary-color);
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+	background-color: var(--secondary-color) !important;
+	color: #FFFFFF;
+}
+
+
+a, a:hover, a:focus {
+	color: var(--primary-color) !important;
+}
+
+.card-header {
+	background-color: var(--primary-color);
+	color: #FFFFFF;
+	border-radius: 14.5px 14.5px 0 0 !important;
+}
+
+.card-deck, .card, body > div, footer {
+	border-color: var(--primary-color);
+	border-radius: 1rem;
+}
+
+.text-muted {
+	color: #8C8C8C;
+}
