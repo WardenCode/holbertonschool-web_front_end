@@ -1,8 +1,8 @@
 :root {
 	--primary-color: #E0003C;
 	--secondary-color: #BC1340;
+	--light-color: #FFFFFF;
 }
-
 
 .btn-primary {
 	background-color: var(--primary-color);
@@ -18,24 +18,27 @@
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:focus {
-	background-color: var(--secondary-color) !important;
-	color: #FFFFFF;
+	background-color: var(--secondary-color)!important;
+	color: var(--light-color);
 }
 
-
-a, a:hover, a:focus {
-	color: var(--primary-color) !important;
+a[href="#"], a[href="#"]:hover, a[href="#"]:focus {
+	color: var(--primary-color)!important;
 }
 
 .card-header {
 	background-color: var(--primary-color);
-	color: #FFFFFF;
-	border-radius: 14.5px 14.5px 0 0 !important;
+	color: var(--light-color);
+	border-radius: 14.5px 14.5px 0 0!important;
 }
 
-.card-deck, .card, body > div, footer {
-	border-color: var(--primary-color);
+.container .card-deck, .container .card {
+	border-color: var(--primary-color)!important;
 	border-radius: 1rem;
+}
+
+body > div.border-bottom, .container footer {
+	border-color: var(--primary-color)!important;
 }
 
 .text-muted {
