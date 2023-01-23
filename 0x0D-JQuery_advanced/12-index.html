@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+	<head>
+
+		<meta charset="utf-8" />
+		<title>Task 12</title>
+		<script src="https://code.jquery.com/jquery-3.6.3.js"
+			integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+
+		<script type="application/javascript">
+			$(() => {
+				function addPostRow (data) {
+					const { id, title, author } = data;
+					$("body").append(`<p id="row-${id}"><span>(delete)</span><span>Post created with id ${id}, title: ${title}, author: ${author}</span></p>`);
+					$(`#row-${id} span:first-child`).click(() => deletePost(id));
+				}
+
+				function deletePost (id) {
+					const url = `http://localhost:3000/posts/${id}`;
+					$.ajax({
+						url,
+						type: "DELETE",
+					})
+						.done(() => $(`#row-${id}`).remove())
+						.fail(() => alert("Post was not deleted"));
+				}
+
+				function listPosts () {
+					const url = "http://localhost:3000/posts";
+					$.get(url)
+						.done((posts, status) => {
+							for (const post of posts)
+								addPostRow(post);
+						})
+						.fail(() => alert("Server Error"));
+				}
+
+				function buildForm () {
+					const newForm = $("<form></form>");
+
+					newForm.append(`
+						<div>
+							<label for="author">Author</label>
+							<input id="author" type="text"/>
+						</div>`);
+
+					newForm.append(`
+						<div>
+							<label for="title">Title</label>
+							<textarea id="title"></textarea>
+						</div>`);
+
+					newForm.append($(`<input type="submit"/>`).click((e) => {
+						e.preventDefault();
+						sendForm();
+					}));
+
+					$("body").append(newForm);
+				}
+
+				function sendForm () {
+					const url = "http://localhost:3000/posts";
+					const data = {
+						title: $("#title").val(),
+						author: $("#author").val(),
+					};
+
+					$("form").after("<p>About to send the query to the API</p>");
+
+					$.post(url, data)
+						.done((response) => addPostRow(response))
+						.fail(() => alert("Error sending the POST query"));
+				}
+
+				buildForm();
+
+				$("input").keypress((e) => {
+					if (e.which === 13) {
+						e.preventDefault();
+						$(`input[type="submit"]`).click();
+					}
+				});
+
+				listPosts();
+			});
+		</script>
+	</body>
+
+</html>
