@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+	<head>
+
+		<meta charset="utf-8" />
+		<title>Task 8</title>
+		<script src="https://code.jquery.com/jquery-3.6.3.js"
+			integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+
+		<script type="application/javascript">
+			function createSearchForm () {
+				const searchInput = $(`<input type="text">`);
+				const submitBtn = $(`<input type="submit">`).click(() => queryWikipedia(searchInput.val()));
+
+				$("body").append(searchInput, submitBtn, "<ul></ul>", `<ul id="pagination"></ul>`);
+			}
+
+			function addNewArticle (id, title, snippet) {
+				const newArticle = $("<li></li>");
+				newArticle.append((`<p><span>${id} -<span> <b>${title}</b></p>`), $(`<p>${snippet}</p>`));
+
+				$("input + ul").append(newArticle);
+			}
+
+			function queryWikipedia (search, offset = 0) {
+				let url = "https://en.wikipedia.org/w/api.php";
+				const params = {
+					action: "query",
+					list: "search",
+					srsearch: search,
+					format: "json",
+					sroffset: offset,
+				};
+
+				url = url + "?origin=*";
+
+				for (const key of Object.keys(params))
+					url += "&" + key + "=" + params[key];
+
+				$.get(url, (data) => {
+					$("input + ul").empty();
+					const results = data.query.search;
+
+					buildPagination(data.query.searchinfo.totalhits, 10, data.continue?.sroffset ? data.continue.sroffset - 10 : data.query.searchinfo.totalhits);
+
+					for (const { pageid, title, snippet } of results)
+						addNewArticle(pageid, title, snippet);
+				});
+			}
+
+			function buildPagination (numberOfItems, itemsPerPage, currentOffset) {
+				const pagination = $("#pagination");
+				pagination.empty();
+
+				for (let i = 0; i < Math.ceil(numberOfItems / itemsPerPage); i++) {
+					const paginationItem = $(`<li>${i + 1}<li>`)
+						.css({
+							"display": "inline",
+							"cursor": "pointer",
+							"margin-left": "10px",
+							"font-weight": (i === Math.ceil(currentOffset / 10) || ((i + 1 === Math.ceil(numberOfItems / itemsPerPage)) && (numberOfItems === currentOffset))) ? "bold" : "normal"
+						})
+						.click(() => {
+							const offset = i * 10;
+
+							if (offset >= numberOfItems)
+								offset -= numberOfItems % 10;
+
+							queryWikipedia($(`input[type="text"]`).val(), offset);
+						});
+
+					pagination.append(paginationItem);
+				}
+			}
+
+			createSearchForm();
+		</script>
+	</body>
+
+</html>
