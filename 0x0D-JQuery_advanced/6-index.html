@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+	<head>
+
+		<meta charset="utf-8" />
+		<title>Task 6</title>
+		<script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
+			integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+
+		<script type="application/javascript">
+			function createFamilyTree () {
+				const table = $("<table></table>");
+
+				table.append(`
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+					</tr>
+				</thead>`);
+
+				table.append("<tbody></tbody>");
+
+				$("body").append(table);
+			}
+
+			function addNewMember (firstName, lastName, position) {
+				const newMember = $("<tr></tr>");
+				const thirdCell = $("<td>(X)</td>")
+					.css({
+						"background-color": "orange",
+						"cursor": "pointer"
+					})
+					.click(() => newMember.remove());
+
+				newMember.append(`<td>${firstName}</td>`);
+				newMember.append(`<td>${lastName}</td>`);
+				newMember.append(thirdCell);
+
+				if (position === "before")
+					$("body > table > tbody").prepend(newMember);
+				else
+					$("body > table > tbody").append(newMember);
+			}
+
+			function createForm () {
+				const inputSelect = $(`
+				<select>
+					<option value="after">After</option>
+					<option value="before">Before</option>
+				</select>`);
+
+				const submitBtn = $(`<input type="submit">`).click(() => {
+					addNewMember($("input").first().val(), $("input:nth-of-type(2)").val(), inputSelect.val());
+				});
+
+				$("table").before(`<input type="text"/>`, `<input type="text"/>`, inputSelect, submitBtn);
+			}
+
+			createFamilyTree();
+			createForm();
+
+		</script>
+	</body>
+
+</html>
