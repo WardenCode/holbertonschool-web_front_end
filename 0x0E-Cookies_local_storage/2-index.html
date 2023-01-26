@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>2. Read cookie</title>
+		<script>
+			window.addEventListener('load', () => {
+				/* Cookies functions Starts */
+				const setCookies = () => {
+					const firstname = document.getElementById("firstname");
+					const email = document.getElementById("email");
+
+					const date = new Date();
+					date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
+					const expirationDateUTC = date.toUTCString();
+
+					document.cookie = `firstname=${firstname.value};expires=${expirationDateUTC};path=/`;
+					document.cookie = `email=${email.value};expires=${expirationDateUTC};path=/`;
+				};
+
+				const getCookie = (name) => {
+					const cookies = document.cookie.split("; ");
+					const splittedCookies = cookies.map((cookie) => cookie.split("="));
+
+					for (const splittedCookie of splittedCookies) {
+						if (splittedCookie[0] === name) {
+							return (splittedCookie[1]);
+						}
+					}
+
+					return ("");
+				};
+
+				const showCookies = () => {
+					const newParagraph = document.createElement("p");
+					newParagraph.innerHTML = `Email: ${getCookie("email")} - Firstname: ${getCookie("firstname")}`;
+					document.body.appendChild(newParagraph);
+				};
+				/* Cookies functions Ends */
+
+				/* DOM Interaction Starts */
+				const btnCookie = document.getElementById("btn-cookie");
+				const btnLogin = document.getElementById("btn-login");
+
+				btnLogin.addEventListener("click", setCookies);
+				btnCookie.addEventListener("click", showCookies);
+				/* DOM Interaction Ends */
+			});
+		</script>
+	</head>
+
+	<body>
+		<h2>Login to the website</h2>
+		<input placeholder="Firstname" id="firstname" type="text">
+		<input placeholder="Email" id="email" type="text">
+		<button id="btn-login">Log me in</button>
+		<h2>Cookies</h2>
+		<button id="btn-cookie">Show the cookies</button>
+	</body>
+
+</html>
